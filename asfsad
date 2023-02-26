@@ -1,0 +1,107 @@
+import { StyleSheet, Text, TouchableOpacity, View, ScrollView } from 'react-native';
+import { useNavigation } from "@react-navigation/native"
+import { NativeStackNavigationProp } from '@react-navigation/native-stack';
+
+import '@expo/match-media'
+
+import { useMediaQuery } from "react-responsive";
+
+export type RootStackParamList = {
+  Profile: { name: string } | undefined;
+};
+
+function Workspace() {
+  const isPhone = useMediaQuery({    
+    maxWidth: 520,
+  });
+  const isTablet = useMediaQuery({    
+    maxWidth: 768,
+    minWidth: 521
+  });
+  const isLaptop = useMediaQuery({    
+    maxWidth: 1024,
+    minWidth: 769
+  });
+  
+  if (isPhone) {
+    return (
+      <View style={styles.phone}>
+              
+      </View>
+    )
+  } else if (isTablet) {
+    return (
+      <View>
+        <Text>Tablet</Text>
+      </View>
+    )
+  }
+
+  return (
+    <View>
+      <Text>Desktop</Text>
+    </View>
+  )
+}
+
+export default function Home() {
+  const navigation = useNavigation<NativeStackNavigationProp<RootStackParamList>>();
+  return (
+      <View style={styles.container}>
+        <View style={styles.container2}>
+          <View style={{height: "10%", width: "100%", backgroundColor: "#FFFFFF"}}>
+            <TouchableOpacity onPress={() => {
+              navigation.navigate("Profile", { name: "Jane" })
+            }}>
+              <Text>This is my Hos123123me</Text>
+            </TouchableOpacity>
+          </View>
+
+          <View style={{ flex: 1, overflow: 'hidden' }}>
+            <ScrollView style={styles.workspaces} centerContent={true} fadingEdgeLength={1} showsHorizontalScrollIndicator={false} >
+              <Workspace />
+              <Workspace />
+              <Workspace />
+              <Workspace />
+            </ScrollView>
+          </View>
+          
+        </View>
+      </View>
+  )
+}
+
+const styles = StyleSheet.create({
+    container: {
+      display: "flex",
+      flexDirection: "row",
+      justifyContent: "center",
+      alignItems: "center",
+
+      backgroundColor: '#ACF123',
+      height: "89%",
+    },
+    container2: {
+      backgroundColor: '#000299',
+      height: "80%",
+      width: "90%",
+      maxWidth: 1000,
+    },
+    workspaces: {
+      flex: 4,
+      flexDirection: "row",
+      padding: 10,
+      
+      height: "90%", 
+      width: "100%", 
+      backgroundColor: "#AGE615"
+    },
+    phone: {
+      backgroundColor: "#ffffff",
+      borderColor: "#000000",
+      borderWidth: 2,
+      width: 400,
+      height: 200
+    }
+  });
+  
